@@ -1,0 +1,35 @@
+<div class="login-container" fxLayoutAlign="center center">
+  <div class="login-card-wrapper">
+    <form #loginFrm="ngForm" (ngSubmit)="loginFrm.valid && login(loginFrm.control.value)">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <h2>
+              <mat-icon>input</mat-icon>כניסה למערכת </h2>
+          </mat-card-title>
+          <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle>-->
+        </mat-card-header>
+        <mat-card-content>
+          <div fxLayout="column">
+            <mat-form-field>
+              <input matInput placeholder="שם משתמש" name="username" ngModel required>
+              <mat-icon matPrefix>person</mat-icon>
+              <mat-error *ngIf="'true'">תזין שם משתמש.</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="סיסמה" [type]="hidePassword ? 'password' : 'text'" name="password" ngModel required>
+              <mat-icon matPrefix>lock</mat-icon>
+              <mat-icon matSuffix (click)="hidePassword = !hidePassword"> {{ hidePassword ? 'visibility': 'visibility_off' }}</mat-icon>
+              <mat-error>תזין סיסמה.</mat-error>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <div fxLayoutAlign="center center">
+            <button type="submit" mat-raised-button color='primary'>כנס</button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </form>
+  </div>
+</div>
