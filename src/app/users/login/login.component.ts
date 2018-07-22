@@ -3,6 +3,7 @@ import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 import { ILogin } from "../../interfaces";
 import { CurrentUserService } from "../../services/current-user.service";
+import { UsersService } from "../../services/users.service";
 
 @Component({
   selector: "app-login",
@@ -13,16 +14,18 @@ export class LoginComponent implements OnInit {
   hidePassword: boolean;
   constructor(
     private _router: Router,
-    private _currentUserService: CurrentUserService
-  ) {}
+    private _usersService: UsersService
+  ) { }
 
   ngOnInit() {
     this.hidePassword = true;
   }
 
-  login(userLoginDetails: ILogin) {
-    this._currentUserService.login(userLoginDetails).subscribe(data => {
+  async login(userLoginDetails: ILogin) {
+    const userLoginReponse = await this._usersService.login(userLoginDetails);
+    if (userLoginReponse) {
+      await this._usersService.getUserDetails(userLoginReponse.userId);
       this._router.navigate(["dashboard"]);
-    });
+    }
   }
 }

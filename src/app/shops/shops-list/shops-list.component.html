@@ -1,5 +1,9 @@
-<!--  -->
-<div fxLayoutAlign="center center">
-  <ag-grid-angular style="width: 500px; height: 500px;" class="ag-theme-material" [rowData]="rowData" [columnDefs]="columnDefs">
-  </ag-grid-angular>
+<div class="dashboard-page root">
+  <app-entity-dashboard 
+    [showActions]="'true'"
+    [columnDefs]="columnDefs"
+    [entites]="rowData"
+    [formQuestions]="edFormQuestions"
+    (onFormSubmit)="edOnSubmit($event)"
+    (onEntityDelete)="edOnEntityDelete($event)"></app-entity-dashboard>
 </div>

@@ -1,0 +1,14 @@
+.field-viwer {
+    position: relative;
+    margin-right: 14px;
+    ::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: -13px;
+        top: 13px;
+        height: 30px;
+        width: 5px;
+        background-color: #ffc107;
+    }
+}

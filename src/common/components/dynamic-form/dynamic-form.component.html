@@ -1,0 +1,11 @@
+<div>
+    <form id="{{name}}" name="{{name}}" (ngSubmit)="submit()" [formGroup]="form">
+        <div *ngFor="let question of questions" class="form-row">
+            <app-question [question]="question" [form]="form"></app-question>
+        </div>
+
+        <div class="form-row" *ngIf="!parentSubmit">
+            <button type="submit" [disabled]="!form.valid">{{'SAVE'|translate}}</button>
+        </div>
+    </form>
+</div>

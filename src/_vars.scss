@@ -1,0 +1,3 @@
+$layout_lang: "rtl"; // 'ltr'
+$direction: if($layout_lang== "rtl", "right", "left");
+$directionOpposite: if($layout_lang== "rtl", "left", "right");

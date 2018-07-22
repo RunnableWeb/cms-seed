@@ -1,0 +1,6 @@
+
+
+
+<button *ngIf="dataModel.type===type.Button" mat-raised-button (click)="onBtnClick($event)">{{dataModel.text}}</button>
+
+<a *ngIf="dataModel.type===type.Link" mat-raised-button routerLink="{{dataModel.link}}">{{dataModel.text}}</a>

@@ -1,0 +1,24 @@
+<div [formGroup]="form">
+    <label [attr.for]="question.key" *ngIf="question.controlType !== controlTypes.Textbox">{{question.label}}</label>
+
+    <div [ngSwitch]="question.controlType">
+
+        <mat-form-field class="example-full-width" *ngSwitchCase="controlTypes.Textbox">
+            <input autocomplete="off" matInput [type]="question.type" [placeholder]="question.label" [formControlName]="question.key">
+            <mat-error>{{question.requiredMessage}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngSwitchCase="controlTypes.Dropdown">
+            <mat-select [placeholder]="'CHOOSE'|translate" [formControlName]="question.key" [multiple]="question.isMultiple" [compareWith]="DropdownQuestion.matSelectCompare">
+                <mat-option *ngFor="let opt of question.options" [value]="opt.value">
+                    {{opt.text}}
+                </mat-option>
+            </mat-select>
+            <mat-error>{{question.requiredMessage}}</mat-error>
+        </mat-form-field>
+
+        <mat-radio-group *ngSwitchCase="controlTypes.RadioButtonsGroup" [formControlName]="question.key">
+            <mat-radio-button *ngFor="let opt of question.options" [value]="opt.value">{{opt.text}}</mat-radio-button>
+        </mat-radio-group>
+    </div>
+</div>

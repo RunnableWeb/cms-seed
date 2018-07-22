@@ -1,0 +1,13 @@
+{
+    "LBL_USERNAME": "שם משתמש",
+    "LBL_PASSWORD": "סיסמה",
+    "ADD_NEW": "הוסף חדש",
+    "CHOOSE": "בחר",
+    "EDIT": "לערוך",
+    "DELETE": "מחק",
+    "SAVE": "שמור",
+    "CANCEL": "לבטל",
+    "LOGOUT": "להתנתק",
+    "LOADING":"טוען...",
+    "SHOPS":"חנויות"
+}

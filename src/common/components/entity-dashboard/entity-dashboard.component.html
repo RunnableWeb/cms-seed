@@ -1,0 +1,9 @@
+<div class="root">
+  <button mat-button color="primary" (click)="onAddEntity()" *ngIf="showActions">
+    <mat-icon>add</mat-icon>
+    {{'ADD_NEW'|translate}}
+  </button>
+  <ag-grid-angular #agGrid style="width: 100%;" class="ag-theme-material" [gridOptions]="gridOptions" [rowData]="entites" [gridAutoHeight]="true"
+    [columnDefs]="columnDefs">
+  </ag-grid-angular>
+</div>
