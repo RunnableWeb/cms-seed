@@ -1,9 +1,12 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, of } from "rxjs";
-import { ILogin, IAppUser, ILBUserLoginResponse } from "../interfaces";
+import { BehaviorSubject, Observable, of, Subject } from "rxjs";
+import { IAppUser, ILBUserLoginResponse } from "../interfaces";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment";
 import { UserRoles } from "../constants/UserRole";
+import { UsersService } from "./users.service";
+import { takeUntil } from "rxjs/operators";
+
 
 @Injectable({
   providedIn: "root"
@@ -23,7 +26,14 @@ export class CurrentUserService {
   private _localStorageKey = "USER";
   private _localStorageValue = {};
 
-  constructor(private _http: HttpClient) { }
+  private _unSub = new Subject();
+
+  /**
+   * ctor
+   */
+  constructor(
+    private _http: HttpClient,
+    private _userSvc: UsersService) { }
 
   get isAuthorized(): Observable<boolean> {
     return this._isAuthorized$;
@@ -60,19 +70,17 @@ export class CurrentUserService {
         this._isAuthorized$.next(false);
       }
     }
+
+    // watch login action and act
+    this._userSvc.onLogin$
+      .pipe(takeUntil(this._unSub))
+      .subscribe(this._onUserJustLoggedIn)
   }
 
   private _initUserDetails(stUser: ILBUserLoginResponse) {
     // interceptor will catch 401 response and set the _isAuthorized value to false if needed.
-    return this._http
-      .get(
-        `${environment.api.baseUrl}/appUsers/${
-        stUser.userId
-        }?filter[include]=roles`
-      )
-      .toPromise()
+    return this._userSvc.getUserDetails(stUser.userId)
       .then((userDetails: IAppUser) => {
-
         this._setUserRoles(userDetails);
         this._userDetails$.next(userDetails);
         this._isAuthorized$.next(true);
@@ -90,14 +98,16 @@ export class CurrentUserService {
     this.userId = stUser.userId;
   }
 
-  public onUserJustLoggedIn(model: ILBUserLoginResponse): void {
-    //save data to storage
-    const { _localStorageKey } = this;
-    let stUser = JSON.parse(localStorage.getItem(_localStorageKey));
-    stUser = { ...stUser, ...model };
-    localStorage.setItem(_localStorageKey, JSON.stringify(stUser));
-    this.accessToken = model.id;
-    this._initUserDetails(stUser);
+  public _onUserJustLoggedIn(model: ILBUserLoginResponse): void {
+    if (model) {
+      //save data to storage
+      const { _localStorageKey } = this;
+      let stUser = JSON.parse(localStorage.getItem(_localStorageKey));
+      stUser = { ...stUser, ...model };
+      localStorage.setItem(_localStorageKey, JSON.stringify(stUser));
+      this.accessToken = model.id;
+      this._initUserDetails(stUser);
+    }
   }
 
   logout() {

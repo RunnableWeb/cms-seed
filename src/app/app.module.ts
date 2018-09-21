@@ -1,5 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
+import { NgModule, Injector } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import { AppComponent } from "./app.component";
@@ -39,6 +39,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { UsersService } from "./services/users.service";
 import { ToasterService } from "./services/toaster.service";
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from "@angular/common/http";
+import { DatePipe, DecimalPipe } from "@angular/common";
+
 import { ToastrModule } from "../../node_modules/ngx-toastr";
 
 import {
@@ -52,6 +54,8 @@ import { TranslateModule, TranslateLoader } from "../../node_modules/@ngx-transl
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { QuestionControlService } from "../common/components/dynamic-form/QuestionControl.service";
 import { UtilsService } from "./services/utils.service";
+import { setAppInjector } from "./app-injector";
+
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -114,6 +118,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ToasterService,
     UsersService,
     UtilsService,
+    DatePipe,
+    DecimalPipe,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AccessTokenHeaderInterceptor,
@@ -128,4 +134,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   bootstrap: [AppComponent],
   entryComponents: [EntityFormModalComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(injector: Injector) {
+    setAppInjector(injector);
+  }
+}

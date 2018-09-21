@@ -4,21 +4,29 @@ import { Router } from "@angular/router";
 import { ILogin } from "../../interfaces";
 import { CurrentUserService } from "../../services/current-user.service";
 import { UsersService } from "../../services/users.service";
+import { ToasterService } from "../../services";
+import { ComponentBase } from "../../component.base";
 
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.scss"]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent extends ComponentBase implements OnInit {
   hidePassword: boolean;
   constructor(
     private _router: Router,
-    private _usersService: UsersService
-  ) { }
+    private _usersService: UsersService,
+    private _toastrService: ToasterService,
+  ) {
+    super([
+      'MSG_LOGIN_FAIL'
+    ]);
+  }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.hidePassword = true;
+    await this.translateKeys();
   }
 
   async login(userLoginDetails: ILogin) {

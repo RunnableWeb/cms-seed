@@ -4,7 +4,9 @@ import { CRUDService } from './generic-services/crud.service';
 import { IAppUser, ILogin, ILBUserLoginResponse, ILBUserRole, IAppUserCreateOrUpdateRequest } from '../interfaces';
 import { HttpClient } from '@angular/common/http';
 import { ToasterService } from './toaster.service';
-import { CurrentUserService } from './current-user.service';
+import { TranslateService } from '@ngx-translate/core';
+import { UtilsService } from './utils.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +18,35 @@ export class UsersService extends CRUDService<IAppUser> {
   constructor(
     protected http: HttpClient,
     private _toasterService: ToasterService,
-    private _currentUserService: CurrentUserService
+    private _translateSvc: TranslateService,
+    private _utilsSvc: UtilsService
   ) {
     super(http);
+
+    this._initTranslation();
+  }
+
+  // #region properties
+  _onLogin$ = new BehaviorSubject<ILBUserLoginResponse>(null)
+  get onLogin$() {
+      return this._onLogin$;
+  }
+
+  // #endregion properties
+
+  /****************************/
+
+  private async _initTranslation() {
+      try{ 
+          await this._translateSvc.get([
+            'USERS.MSG_LOGIN_FAIL',
+            'USERS.MSG_LOGOUT_FAIL',
+            "USER.MSG_FAIL_TO_GET_DETAILS"
+          ]).toPromise();
+      }      
+      catch(e) {
+        // TODO Logging
+      }
   }
 
   login(loginData: ILogin): Promise<ILBUserLoginResponse> {
@@ -26,11 +54,12 @@ export class UsersService extends CRUDService<IAppUser> {
       .post(`${this.apiUrl}/login`, loginData)
       .toPromise()
       .then((model: ILBUserLoginResponse) => {
-        this._currentUserService.onUserJustLoggedIn(model);
+        this.onLogin$.next(model);
+        
         return model;
       })
       .catch(e => {
-        this._toasterService.showError('MSG_LOGIN_FAIL');
+        this._toasterService.showError(this._utilsSvc.syncTranslate('USERS.MSG_LOGIN_FAIL'));
         return Promise.reject(null);
       });
   }
@@ -43,21 +72,8 @@ export class UsersService extends CRUDService<IAppUser> {
         return res;
       })
       .catch(e => {
-        this._toasterService.showError('USER.MSG_USER_GET_ERROR');
+        this._toasterService.showError(this._utilsSvc.syncTranslate('USER.MSG_FAIL_TO_GET_DETAILS'));
         return null;
-      });
-  }
-
-  getUsersDetails(): Promise<IAppUser[]> {
-    return this.http
-      .get(`${this.apiUrl}?filter[include]=roles`)
-      .toPromise()
-      .then(res => {
-        return <IAppUser[]>res;
-      })
-      .catch(e => {
-        this._toasterService.showError('USER.MSG_USERS_GET_ERROR');
-        return [];
       });
   }
 
