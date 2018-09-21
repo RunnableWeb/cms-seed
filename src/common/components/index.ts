@@ -7,3 +7,7 @@ export * from './entity-dashboard/modal/entity-form-modal.component';
 export * from './dynamic-form';
 
 export * from './field-viewer/field-viewer.component';
+
+export * from './entity-list-filter/entity-list-filter.component';
+
+export * from './search-input/search-input.component'

@@ -25,8 +25,11 @@ import {
   MatRadioModule,
   MatSelectModule,
   MatDialogModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatBadgeModule
 } from "@angular/material";
+
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -42,7 +45,9 @@ import {
   EntityFormModalComponent,
   AppDynamicFormComponent,
   DynamicFormQuestionComponent,
-  AppFieldViewerComponent
+  AppFieldViewerComponent,
+  EntityListFilterComponent,
+  SearchInputComponent
 } from "./../common/components";
 
 import { ShopsListComponent } from "./shops/shops-list/shops-list.component";
@@ -81,6 +86,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ShopsListComponent,
     LoginComponent,
     AppFieldViewerComponent,
+    EntityListFilterComponent,
+    SearchInputComponent,
     
     //Entity Dashboard Componenet (they should be moved to 3rd party Module)
     AgGridTableActionsComponent,
@@ -88,7 +95,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     EntityDashboardComponent,
     AppDynamicFormComponent,
     DynamicFormQuestionComponent,
-    EntityFormModalComponent
+    EntityFormModalComponent,
     //----------------------
   ],
   imports: [
@@ -109,8 +116,11 @@ export function HttpLoaderFactory(http: HttpClient) {
       AgGridTableActionsComponent,
       AgGridMatButtonComponent
     ]),
+    
     HttpClientModule,
     ToastrModule.forRoot(),
+    NgxMatSelectSearchModule,
+
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
@@ -124,7 +134,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatProgressSpinnerModule,
     MatRadioModule,
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
+    MatBadgeModule,
   ],
   providers: [
     QuestionControlService,
@@ -148,7 +159,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [EntityFormModalComponent]
+  entryComponents: [
+    EntityFormModalComponent,
+  ]
 })
 export class AppModule {
   constructor(injector: Injector) {

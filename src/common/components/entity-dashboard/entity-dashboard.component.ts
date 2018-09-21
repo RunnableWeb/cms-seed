@@ -35,6 +35,7 @@ export class EntityDashboardComponent implements OnInit, OnChanges, AfterViewIni
   @Input() btnTxtDelete;
   @Input() btnTxtMoreDetails;
   @Input() showActions: boolean = true;
+  @Input() hideAddAction: boolean = false;
   @Input() suppressResponsiveness: boolean = false;
 
   @Output() onFormSubmit = new EventEmitter<IEntityDashboardSubmitResponse>()
@@ -45,6 +46,8 @@ export class EntityDashboardComponent implements OnInit, OnChanges, AfterViewIni
   private _gridApi;
   private _gridColumnApi;
 
+  private _translations: object = {};
+
   constructor(
     private _matDialog: MatDialog,
     private _translateService: TranslateService,
@@ -53,6 +56,10 @@ export class EntityDashboardComponent implements OnInit, OnChanges, AfterViewIni
   }
 
   async ngOnInit() {
+    this._translations = await this._translateService.get([
+      'AG_GRID.MSG_NO_ROWS_TO_SHOW'
+    ]).toPromise();
+
     this._formName = `edForm-${edFormNameCounter++}`;
 
     this.gridOptions = {
@@ -64,7 +71,8 @@ export class EntityDashboardComponent implements OnInit, OnChanges, AfterViewIni
       },
       context: {
         parentComp: this
-      }
+      },
+      localeText: {noRowsToShow: this._translations['AG_GRID.MSG_NO_ROWS_TO_SHOW']}
     };
 
     window.addEventListener('resize', () => {
@@ -116,8 +124,8 @@ export class EntityDashboardComponent implements OnInit, OnChanges, AfterViewIni
   }
 
   // called from AgGridTableActionsComponent
-  onDeleteEntity(entity: object) {
-    this.onEntityDelete.emit(entity);
+  async onDeleteEntity(entity: object) {
+       this.onEntityDelete.emit(entity);
   }
 
   _onGridReady(params) {
@@ -183,14 +191,16 @@ export class EntityDashboardComponent implements OnInit, OnChanges, AfterViewIni
     if (device.mobile() || device.tablet() || this.suppressResponsiveness) {
       return;
     }
-
-    this.gridOptions.api.sizeColumnsToFit();
+   
+    if(this.gridOptions.api) {
+      this.gridOptions.api.sizeColumnsToFit();
+    }
   }
 }
 
 
 export interface IHasEntityDashboardComponent {
-  edColumnDefs: object[];
+  edColumnDefs: ColDef[];
   edRowData: object[];
   edFormQuestions: QuestionBase<any>[];
   edFrameworkComponents?: object,

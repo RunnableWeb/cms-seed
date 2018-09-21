@@ -8,4 +8,5 @@ export class QuestionOptionsBase<T> {
   requiredMessage?: string;
   order?: number;
   controlType?: FormControlType;
+  setInitValueHandler?: (value) => any
 }

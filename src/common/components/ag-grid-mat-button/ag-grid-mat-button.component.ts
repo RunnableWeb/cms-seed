@@ -8,11 +8,11 @@ import { ICellRendererParams } from 'ag-grid';
     styleUrls: ['./ag-grid-mat-button.component.scss']
 })
 export class AgGridMatButtonComponent implements ICellRendererAngularComp {
-    public entity:  object;
+    public entity: object;
     public dataModel: AgGridMatButtonDataModel;
     public type = AgGridMatButtonComponentType;
-    
-    constructor() { } 
+
+    constructor() { }
 
     agInit(params: ICellRendererParams) {
         this.entity = params.data;
@@ -31,10 +31,12 @@ export interface AgGridMatButtonDataModel {
     type: AgGridMatButtonComponentType,
     text: string,
     onClick?: () => void
-    link?: string
+    link?: string,
+    hasBadge?: boolean,
+    badgeValue?: string
 }
 
 export enum AgGridMatButtonComponentType {
-    Button, 
+    Button,
     Link
 }

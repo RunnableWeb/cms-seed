@@ -1,6 +1,14 @@
+<div class="ag-grid-mat-button">
+    <ng-container *ngIf="!dataModel.hasBadge">
+        <button *ngIf="dataModel.type===type.Button" mat-raised-button (click)="onBtnClick($event)">{{dataModel.text}}</button>
+        <a *ngIf="dataModel.type===type.Link" mat-raised-button routerLink="{{dataModel.link}}">{{dataModel.text}}</a>
+    </ng-container>
 
+    <ng-container *ngIf="dataModel.hasBadge">
+        <button *ngIf="dataModel.type===type.Button" mat-raised-button (click)="onBtnClick($event)" matBadge="{{dataModel.badgeValue}}"
+            matBadgePosition="before" matBadgeColor="accent">{{dataModel.text}}</button>
 
-
-<button *ngIf="dataModel.type===type.Button" mat-raised-button (click)="onBtnClick($event)">{{dataModel.text}}</button>
-
-<a *ngIf="dataModel.type===type.Link" mat-raised-button routerLink="{{dataModel.link}}">{{dataModel.text}}</a>
+        <a *ngIf="dataModel.type===type.Link" mat-raised-button routerLink="{{dataModel.link}}" matBadge="{{dataModel.badgeValue}}"
+            matBadgePosition="before" matBadgeColor="primary">{{dataModel.text}}</a>
+    </ng-container>
+</div>
