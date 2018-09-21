@@ -1,11 +1,15 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule, Injector } from "@angular/core";
 import { RouterModule } from "@angular/router";
-
-import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from "@angular/common/http";
+import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
+import { DatePipe, DecimalPipe } from "@angular/common";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 
 import { AgGridModule } from "ag-grid-angular";
+
+import { ToastrModule } from "ngx-toastr";
 
 import {
   MatGridListModule,
@@ -25,35 +29,44 @@ import {
 } from "@angular/material";
 
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { appRoutes } from "./app.routes";
+
+import { AppComponent } from "./app.component";
+
+import {  
+  AgGridTableActionsComponent,
+  AgGridMatButtonComponent,
+  EntityDashboardComponent,
+  EntityFormModalComponent,
+  AppDynamicFormComponent,
+  DynamicFormQuestionComponent,
+  AppFieldViewerComponent
+} from "./../common/components";
 
 import { ShopsListComponent } from "./shops/shops-list/shops-list.component";
 import { LoginComponent } from "./users/login/login.component";
 import { AppDashboardComponent } from "./app-dashboard/app-dashboard.component";
+import { DashboardDefaultSelectorComponent } from "./app-dashboard/dashboard-default-selector/dashboard-default-selector.component";
 
 import { BasicAuthGuard } from "./_guards/basic.auth.guard";
 
-import { CurrentUserService } from "./services/current-user.service";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { UsersService } from "./services/users.service";
-import { ToasterService } from "./services/toaster.service";
-import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from "@angular/common/http";
-import { DatePipe, DecimalPipe } from "@angular/common";
+import { 
+  CurrentUserService,
+  UsersService,
+  ToasterService,
+  UtilsService,
+  LogService
+ } from './services';
 
-import { ToastrModule } from "../../node_modules/ngx-toastr";
+ import { QuestionControlService } from "../common/components/dynamic-form/QuestionControl.service";
 
 import {
   AccessTokenHeaderInterceptor,
   UnAuthenticatedInterceptor
 } from "./http-interceptors";
-import { DashboardDefaultSelectorComponent } from "./app-dashboard/dashboard-default-selector/dashboard-default-selector.component";
-import { AgGridTableActionsComponent, AgGridMatButtonComponent, EntityDashboardComponent, EntityFormModalComponent } from "../common/components";
-import { AppDynamicFormComponent, DynamicFormQuestionComponent } from "../common/components/dynamic-form";
-import { TranslateModule, TranslateLoader } from "../../node_modules/@ngx-translate/core";
-import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-import { QuestionControlService } from "../common/components/dynamic-form/QuestionControl.service";
-import { UtilsService } from "./services/utils.service";
+
 import { setAppInjector } from "./app-injector";
 
 // AoT requires an exported function for factories
@@ -67,6 +80,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DashboardDefaultSelectorComponent,
     ShopsListComponent,
     LoginComponent,
+    AppFieldViewerComponent,
+    
     //Entity Dashboard Componenet (they should be moved to 3rd party Module)
     AgGridTableActionsComponent,
     AgGridMatButtonComponent,
@@ -119,6 +134,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     UsersService,
     UtilsService,
     DatePipe,
+    LogService,
     DecimalPipe,
     {
       provide: HTTP_INTERCEPTORS,
