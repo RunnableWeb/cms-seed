@@ -7,7 +7,7 @@ import { ToastrService } from "ngx-toastr";
 export class ToasterService {
   constructor(private _toastr: ToastrService) { }
 
-  position: string = "toast-bottom-center";
+  position: string = "toast-center-center";
 
   showSuccess(messageKey: string, titleKey?: string) {
     this._toastr.success(
