@@ -1,0 +1,6 @@
+[submodule "src/rw-ng-common"]
+	path = src/rw-ng-common
+	url = https://SamihAbuawad164@bitbucket.org/runnableweb/rw-ng-common.git
+[submodule "src/rw-ng-ggl-material"]
+	path = src/rw-ng-ggl-material
+	url = https://SamihAbuawad164@bitbucket.org/runnableweb/rw-ng-ggl-material.git
