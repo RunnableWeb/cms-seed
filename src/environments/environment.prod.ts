@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
+  baseUrl: 'https://c-roads.co.il',
   api: {
-    baseUrl: 'http://localhost:3000/api'
+    baseUrl: 'https://c-roads.co.il/api'
   }
 };

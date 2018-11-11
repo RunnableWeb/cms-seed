@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { QuestionBase, TextboxQuestion, DropdownQuestion, DropdownQuestionOption } from "../../../common/components/dynamic-form";
+import { QuestionBase, TextboxQuestion, DropdownQuestion, DropdownQuestionOption } from "src/rw-ng-ggl-material/components";
 import { DashboardService } from "../../app-dashboard/dashboard.service";
+
 
 @Component({
   selector: "app-shops-list",

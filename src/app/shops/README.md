@@ -1,0 +1,1 @@
+shop-list component provided as example - can be removed

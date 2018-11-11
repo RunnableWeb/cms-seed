@@ -4,9 +4,10 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '../../../node_modules/@angular/router';
 import { TranslateService } from '../../../node_modules/@ngx-translate/core';
-import { CurrentUserService } from '../services';
+
 import { IAppUser } from '../interfaces';
 import { DashboardService } from './dashboard.service';
+import { CurrentUserService } from 'src/rw-ng-common/services';
 
 @Component({
   selector: 'app-dashboard',

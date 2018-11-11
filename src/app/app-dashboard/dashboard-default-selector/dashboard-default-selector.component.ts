@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { CurrentUserService } from "../../services";
-import { IAppUser } from "../../interfaces";
 import { Router } from "@angular/router";
+import { CurrentUserService } from "src/rw-ng-common/services";
+import { IRWUser } from "src/rw-ng-common/interfaces";
 
 @Component({
   selector: "app-dashboard-default-selector",
@@ -16,7 +16,7 @@ export class DashboardDefaultSelectorComponent implements OnInit {
 
   ngOnInit() {
     const { _currentUser } = this;
-    _currentUser.userDetails$.subscribe((userDetials: IAppUser) => {
+    _currentUser.userDetails$.subscribe((userDetials:IRWUser) => {
       if (userDetials) {
         this._router.navigate(["dashboard/shopsList"])
         // if (_currentUser.isAdmin) {

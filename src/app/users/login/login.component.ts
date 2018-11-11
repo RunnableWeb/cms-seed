@@ -2,10 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 import { ILogin } from "../../interfaces";
-import { CurrentUserService } from "../../services/current-user.service";
-import { UsersService } from "../../services/users.service";
-import { ToasterService } from "../../services";
 import { ComponentBase } from "../../component.base";
+import { UsersService, ToasterService } from "src/rw-ng-common/services";
+
 
 @Component({
   selector: "app-login",

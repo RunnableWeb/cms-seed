@@ -1,6 +1,7 @@
 import { TranslateService } from "@ngx-translate/core";
-import { AppInjector } from "./app-injector";
+
 import { Subject } from "rxjs";
+import { AppInjector } from "src/rw-ng-common/misc";
 
 export class ComponentBase {
     

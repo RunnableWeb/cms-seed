@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CurrentUserService } from './services';
+
 import { TranslateService } from '../../node_modules/@ngx-translate/core';
+import { CurrentUserService } from 'src/rw-ng-common/services';
 
 @Component({
   selector: 'app-root',

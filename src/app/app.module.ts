@@ -38,41 +38,15 @@ import { appRoutes } from "./app.routes";
 
 import { AppComponent } from "./app.component";
 
-import {  
-  AgGridTableActionsComponent,
-  AgGridMatButtonComponent,
-  EntityDashboardComponent,
-  EntityFormModalComponent,
-  AppDynamicFormComponent,
-  DynamicFormQuestionComponent,
-  AppFieldViewerComponent,
-  EntityListFilterComponent,
-  SearchInputComponent
-} from "./../common/components";
-
 import { ShopsListComponent } from "./shops/shops-list/shops-list.component";
 import { LoginComponent } from "./users/login/login.component";
 import { AppDashboardComponent } from "./app-dashboard/app-dashboard.component";
 import { DashboardDefaultSelectorComponent } from "./app-dashboard/dashboard-default-selector/dashboard-default-selector.component";
 
-import { BasicAuthGuard } from "./_guards/basic.auth.guard";
+import { RWNgCommonModule } from "src/rw-ng-common/RWNgCommon.module";
+import { RWNgGglMaterialModule } from "src/rw-ng-ggl-material/RWNgGglMaterial.module";
+import { setAppInjector } from "src/rw-ng-common/misc";
 
-import { 
-  CurrentUserService,
-  UsersService,
-  ToasterService,
-  UtilsService,
-  LogService
- } from './services';
-
- import { QuestionControlService } from "../common/components/dynamic-form/QuestionControl.service";
-
-import {
-  AccessTokenHeaderInterceptor,
-  UnAuthenticatedInterceptor
-} from "./http-interceptors";
-
-import { setAppInjector } from "./app-injector";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -85,25 +59,16 @@ export function HttpLoaderFactory(http: HttpClient) {
     DashboardDefaultSelectorComponent,
     ShopsListComponent,
     LoginComponent,
-    AppFieldViewerComponent,
-    EntityListFilterComponent,
-    SearchInputComponent,
-    
-    //Entity Dashboard Componenet (they should be moved to 3rd party Module)
-    AgGridTableActionsComponent,
-    AgGridMatButtonComponent,
-    EntityDashboardComponent,
-    AppDynamicFormComponent,
-    DynamicFormQuestionComponent,
-    EntityFormModalComponent,
-    //----------------------
+
   ],
   imports: [
     BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes),
+
+    RWNgCommonModule,
+    RWNgGglMaterialModule,
+    
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -111,14 +76,13 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
+
     FlexLayoutModule,
-    AgGridModule.withComponents([
-      AgGridTableActionsComponent,
-      AgGridMatButtonComponent
-    ]),
     
     HttpClientModule,
+    
     ToastrModule.forRoot(),
+    
     NgxMatSelectSearchModule,
 
     MatGridListModule,
@@ -138,30 +102,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatBadgeModule,
   ],
   providers: [
-    QuestionControlService,
-    BasicAuthGuard,
-    CurrentUserService,
-    ToasterService,
-    UsersService,
-    UtilsService,
-    DatePipe,
-    LogService,
-    DecimalPipe,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AccessTokenHeaderInterceptor,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: UnAuthenticatedInterceptor,
-      multi: true
-    }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [
-    EntityFormModalComponent,
-  ]
 })
 export class AppModule {
   constructor(injector: Injector) {
