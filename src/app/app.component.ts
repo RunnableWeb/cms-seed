@@ -17,7 +17,9 @@ export class AppComponent implements OnInit {
     _translate.use("iw");
   }
 
-  ngOnInit(): void {
-    this._currentUserService.init();
+  async ngOnInit() {
+    try {
+      await this._currentUserService.init();
+    } catch(err) {}
   }
 }

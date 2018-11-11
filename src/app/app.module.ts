@@ -4,10 +4,7 @@ import { RouterModule } from "@angular/router";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from "@angular/common/http";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
-import { DatePipe, DecimalPipe } from "@angular/common";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-
-import { AgGridModule } from "ag-grid-angular";
 
 import { ToastrModule } from "ngx-toastr";
 
@@ -32,7 +29,7 @@ import {
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+
 
 import { appRoutes } from "./app.routes";
 
