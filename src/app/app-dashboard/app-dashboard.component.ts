@@ -84,7 +84,7 @@ export class AppDashboardComponent implements OnInit {
           isShown: true // for admins do this _currentUser.isAdmin
         }
       ]
-      console.log(userDetials);
+      
     });
   }
 
