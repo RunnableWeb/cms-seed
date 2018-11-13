@@ -31,5 +31,5 @@ export const appDashboardRotues: Routes = [
         data: {
             title: "Link 3"
         }
-    },
+    }
 ];

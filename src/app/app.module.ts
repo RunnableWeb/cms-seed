@@ -63,7 +63,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes),
 
-    RWNgCommonModule,
+    RWNgCommonModule.forRoot({
+      loginPath: '/login'
+    }),
     RWNgGglMaterialModule,
     
     TranslateModule.forRoot({

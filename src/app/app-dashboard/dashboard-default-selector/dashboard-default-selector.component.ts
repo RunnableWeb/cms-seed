@@ -1,7 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { CurrentUserService } from "src/rw-ng-common/services";
-import { IRWUser } from "src/rw-ng-common/interfaces";
+import { IRWUser, IRWNgCommonModuleConfig } from "src/rw-ng-common/interfaces";
+import { MODULE_CONFIG } from "src/rw-ng-common/InjectionTokens";
 
 @Component({
   selector: "app-dashboard-default-selector",
@@ -11,22 +12,24 @@ import { IRWUser } from "src/rw-ng-common/interfaces";
 export class DashboardDefaultSelectorComponent implements OnInit {
   constructor(
     private _router: Router,
-    private _currentUser: CurrentUserService
+    private _currentUser: CurrentUserService,
+    @Inject(MODULE_CONFIG) private _moduleConfig: IRWNgCommonModuleConfig
   ) { }
 
   ngOnInit() {
     const { _currentUser } = this;
     _currentUser.userDetails$.subscribe((userDetials:IRWUser) => {
       if (userDetials) {
+        /**
+         * 
+         * TODO BUSINESS SPECIFIC HANDLING 
+         * 
+         */
         this._router.navigate(["dashboard/shopsList"])
-        // if (_currentUser.isAdmin) {
-        //   this._router.navigate(["dashboard/businesses"]);
-        // } else {
-        //   this._router.navigate([
-        //     `/dashboard/businesses/${userDetials.businessId}/orders`
-        //   ]);
-        // }
-      }
+
+      } else {
+          this._router.navigate([this._moduleConfig.loginPath])
+        }
     });
   }
 }
